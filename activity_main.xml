@@ -4,25 +4,25 @@
     android:layout_height="match_parent"
     android:background="#121214">
 
-    <!-- ১. বড় বা মেইন নিচের ওয়েব ভিউ (ফুল স্ক্রিন) -->
+    <!-- নিচের মেইন বা বড় ওয়েব ভিউ -->
     <android.webkit.WebView
         android:id="@+id/main_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- ২. উপরের বাম কর্নারের ছোট স্কয়ার ওয়েব ভিউ -->
-    <!-- লাল বর্ডার দেওয়ার জন্য আমরা এটিকে একটি View-এর মধ্যে রাখছি -->
+    <!-- উপরের বাম কর্নারের ছোট কন্টেইনার (লাল বর্ডারসহ) -->
     <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="150dp"
-        android:layout_margin="20dp"
-        android:background="@android:color/transparent">
+        android:layout_margin="20dp">
         
-        <!-- আপনার কাঙ্ক্ষিত লাল বর্ডারসহ কন্টেইনার -->
+        <!-- লাল বর্ডার দেওয়ার জন্য ব্যাকগ্রাউন্ড ভিউ -->
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/red_border" />
+            android:background="@android:color/transparent"
+            android:borderWidth="2dp"
+            android:borderColor="#e21b3c" />
 
         <android.webkit.WebView
             android:id="@+id/top_webview"
