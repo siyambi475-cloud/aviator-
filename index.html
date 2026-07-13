@@ -3,53 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>দুটি ওয়েব ভিউ</title>
+    <title>Dual Web View Dashboard</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            background-color: #121214;
-        }
-
-        .main-webview {
-            flex: 1;
-            border: none;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .top-webview-container {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 250px;
-            height: 150px;
-            z-index: 10;
-            overflow: hidden;
-            border: 2px solid #e21b3c;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            background: #1a1a1f;
-            border-radius: 8px;
-        }
-
-        .top-webview {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        body { margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background-color: #121214;}
+        .main-webview { flex: 1; border: none; width: 100%; height: 100vh; }
+        .top-webview-container { position: absolute; top: 20px; left: 20px; width: 250px; height: 150px; z-index: 10; background: #e21b3c; padding: 2px; border-radius: 4px;}
+        .top-webview { width: 100%; height: 100%; border: none; background: white; }
     </style>
 </head>
 <body>
 
+    <!-- ছোট স্ক্রিনে আপনার তৈরি করা এভিয়েটর সিগন্যাল পেজ দেখাবে -->
     <div class="top-webview-container">
-        <iframe class="top-webview" src="https://www.google.com" title="ছোট ওয়েব ভিউ"></iframe>
+        <iframe class="top-webview" src="aviator.html"></iframe>
     </div>
 
-    <iframe class="main-webview" src="https://jaya9bangladesh.com" title="বড় ওয়েব ভিউ"></iframe>
+    <!-- বড় স্ক্রিনে আপনার কাঙ্ক্ষিত লিংকটি বসিয়ে দিন -->
+    <!-- (গিটহাবে বেটিং সাইটগুলো সরাসরি আইফ্রেমে সাপোর্ট করে না, তাই অন্য কোনো লিংক বা ডেমো পেজ ব্যবহার করতে পারেন) -->
+    <iframe class="main-webview" src="https://www.bing.com"></iframe>
 
 </body>
 </html>
