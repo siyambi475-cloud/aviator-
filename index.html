@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviator Safe Signal Predictor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121214;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #1a1a1f, #141417);
+            border: 2px solid #e21b3c;
+            border-radius: 16px;
+            padding: 25px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(226, 27, 60, 0.2);
+            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            margin: 0;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo {
+            width: 28px;
+            height: 28px;
+            fill: #e21b3c;
+            animation: fly 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-5px) rotate(3deg); }
+        }
+
+        .signal-box {
+            background-color: #0d0d0f;
+            border-radius: 12px;
+            padding: 30px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #2c2c35;
+            position: relative;
+        }
+
+        .signal-title {
+            font-size: 14px;
+            color: #8a8a98;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .multiplier {
+            font-size: 48px;
+            font-weight: bold;
+            color: #e21b3c;
+            text-shadow: 0 0 15px rgba(226, 27, 60, 0.6);
+            margin: 5px 0;
+            font-family: monospace;
+        }
+
+        .status {
+            font-size: 14px;
+            color: #00e676;
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00e676;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00e676;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .timer-box {
+            font-size: 13px;
+            color: #a0a0ab;
+            margin-bottom: 20px;
+        }
+
+        .btn-generate {
+            background-color: #e21b3c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(226, 27, 60, 0.3);
+        }
+
+        .btn-generate:hover {
+            background-color: #ff2a4b;
+        }
+
+        .btn-generate:active {
+            transform: scale(0.98);
+        }
+
+        .footer-note {
+            font-size: 11px;
+            color: #555562;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <svg class="logo" viewBox="0 0 24 24">
+                <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+            </svg>
+            <h1>Aviator Signal</h1>
+        </div>
+
+        <div class="signal-box">
+            <div class="signal-title">পরবর্তী সিগন্যাল টার্গেট</div>
+            <div class="multiplier" id="multiplier-display">1.50x</div>
+            <div class="status" id="status-container">
+                <div class="status-dot"></div>
+                <span id="status-text">সিগন্যাল প্রস্তুত</span>
+            </div>
+        </div>
+
+        <div class="timer-box" id="timer-text">
+            নতুন সিগন্যাল জেনারেট করতে নিচের বোতামটি চাপুন
+        </div>
+
+        <button class="btn-generate" id="generate-btn" onclick="generateSignal()">নতুন সিগন্যাল</button>
+
+        <div class="footer-note">
+            সর্বোচ্চ লিমিট losss লিমিট ২ রাউন্ড। ২ রাউন্ডের বেশি লস দিলে আবার ১৫ মিনিট পর ডুকবেন। সমস্যা হলে টেলেগ্রামে যোগাযোগ করুন 
+        </div>
+    </div>
+
+    <script>
+        let isWaiting = false;
+
+        function generateSignal() {
+            if (isWaiting) return;
+            
+            const btn = document.getElementById('generate-btn');
+            const multDisplay = document.getElementById('multiplier-display');
+            const statusText = document.getElementById('status-text');
+            const timerText = document.getElementById('timer-text');
+            const statusDot = document.querySelector('.status-dot');
+
+            isWaiting = true;
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.innerText = 'অপেক্ষা করুন...';
+
+            statusText.innerText = 'অ্যানালাইসিস করা হচ্ছে...';
+            statusText.style.color = '#ffb300';
+            statusDot.style.backgroundColor = '#ffb300';
+            statusDot.style.boxShadow = '0 0 8px #ffb300';
+            
+            let count = 0;
+            const shuffleInterval = setInterval(() => {
+                let tempVal = (Math.random() * (2.03 - 1.00) + 1.00).toFixed(2);
+                multDisplay.innerText = tempVal + 'x';
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(shuffleInterval);
+                
+                // Max safe upper limit capped exactly under or equal to 2.03x
+                let finalSignal = (Math.random() * (2.03 - 1.01) + 1.01).toFixed(2);
+                if (finalSignal > 2.03) {
+                    finalSignal = "2.03";
+                }
+
+                multDisplay.innerText = finalSignal + 'x';
+                
+                statusText.innerText = 'সফল সিগন্যাল';
+                statusText.style.color = '#00e676';
+                statusDot.style.backgroundColor = '#00e676';
+                statusDot.style.boxShadow = '0 0 8px #00e676';
+
+                let countdown = 5;
+                timerText.innerText = `পরবর্তী সিগন্যাল পাওয়া যাবে ${countdown} সেকেন্ড পর`;
+
+                const countdownInterval = setInterval(() => {
+                    countdown--;
+                    if (countdown <= 0) {
+                        clearInterval(countdownInterval);
+                        timerText.innerText = "নতুন সিগন্যাল জেনারেট করতে নিচের বোতামটি চাপুন";
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                        btn.innerText = 'নতুন সিগন্যাল';
+                        isWaiting = false;
+                    } else {
+                        timerText.innerText = `পরবর্তী সিগন্যাল পাওয়া যাবে ${countdown} সেকেন্ড পর`;
+                    }
+                }, 1000);
+
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
