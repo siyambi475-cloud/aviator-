@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aviator</title>
+    <title>দুটি ওয়েব ভিউ</title>
     <style>
         body {
             margin: 0;
@@ -33,7 +33,7 @@
             border: 2px solid #e21b3c;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             background: #1a1a1f;
-            border-radius: 6px;
+            border-radius: 8px;
         }
 
         .top-webview {
@@ -42,21 +42,14 @@
             border: none;
         }
     </style>
-    <!-- গিটহাব এবং ব্রাউজারে আইফ্রেম সিকিউরিটি বাইপাস করার স্ক্রিপ্টসমূহ -->
-    <script src="https://unpkg.com/@unpkg/custom-elements@1.1.0/src/custom-elements.js"></script>
-    <script src="https://unpkg.com/@niutech/x-frame-bypass@1.0.2/x-frame-bypass.js" type="module"></script>
 </head>
 <body>
 
-    <!-- ছোট ওয়েব ভিউ (উপরের বাম কর্নারে থাকবে) -->
-    <!-- আপনি নিচে src=" " এর ভেতর আপনার কাঙ্ক্ষিত লিঙ্কটি বসাবেন -->
     <div class="top-webview-container">
-        <iframe is="x-frame-bypass" class="top-webview" src="https://www.google.com"></iframe>
+        <iframe class="top-webview" src="https://www.google.com" title="ছোট ওয়েব ভিউ"></iframe>
     </div>
 
-    <!-- বড় ওয়েব ভিউ (নিচে ব্যাকগ্রাউন্ডে ফুল স্ক্রিন থাকবে) -->
-    <!-- আপনি নিচে src=" " এর ভেতর আপনার কাঙ্ক্ষিত লিঙ্কটি বসাবেন -->
-    <iframe is="x-frame-bypass" class="main-webview" src="https://jaya9bangladesh.com"></iframe>
+    <iframe class="main-webview" src="https://jaya9bangladesh.com" title="বড় ওয়েব ভিউ"></iframe>
 
 </body>
 </html>
